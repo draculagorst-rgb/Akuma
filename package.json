@@ -1,13 +1,13 @@
 {
-    "name": "𝑨𝑲𝑼𝑴𝑨 👁️‍🗨️ 𝐒𝐔𝐏𝐑𝐄𝐌𝐄",
+    "name": "Akuma",
     "version": "7.0",
-    "description": "WhatsApp-Bot Baileys (×͜×  𝐌𝐑 𝐃𝐑𝐀𝐂𝐔𝐋𝐀  &  𝐌𝐑 𝑺𝑴𝑰𝑳𝑬𝒀 ×͜×)",
+    "description": "WhatsApp-Bot Baileys Dracula",
     "main": "index.js",
     "type": "commonjs",
     "scripts": {
         "start": "node index.js"
     },
-    "author": "×͜×  𝐌𝐑 𝐃𝐑𝐀𝐂𝐔𝐋𝐀  &  𝐌𝐑 𝑺𝑴𝑰𝑳𝑬𝒀 ×͜×",
+    "author": "Dracula",
     "license": "MIT",
     "dependencies": {
         "@adiwajshing/keyed-db": "*",
