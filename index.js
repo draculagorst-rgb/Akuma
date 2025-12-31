@@ -48,20 +48,19 @@ const listcolor = ['cyan', 'magenta', 'green', 'yellow', 'blue'];
 const randomcolor = listcolor[Math.floor(Math.random() * listcolor.length)];
 const phoneNumber = process.env.PHONE_NUMBER;
 
-if (!phoneNumber) {
-  console.log("❌ PHONE_NUMBER is not set in Render Environment Variables");
-  process.exit(1);
-}
 if (!prim.authState.creds.registered) {
     const phoneNumber = process.env.PHONE_NUMBER;
 
     if (!phoneNumber) {
         console.log("❌ PHONE_NUMBER not set");
         process.exit(1);
-
-}
+    }
 
     const code = await prim.requestPairingCode(phoneNumber, config().setPair);
+    console.log("=================================");
+    console.log("✅ PAIRING CODE:", code);
+    console.log("=================================");
+}
     console.log("=================================");
     console.log("✅ PAIRING CODE:", code);
     console.log("=================================");
