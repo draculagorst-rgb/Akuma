@@ -79,7 +79,12 @@ const { smsg, sleep, getBuffer } = require('./lib/myfunction');
 const { imageToWebp, videoToWebp, writeExifImg, writeExifVid, addExif } = require('./lib/exif')
 const listcolor = ['cyan', 'magenta', 'green', 'yellow', 'blue'];
 const randomcolor = listcolor[Math.floor(Math.random() * listcolor.length)];
+const phoneNumber = process.env.PHONE_NUMBER;
 
+if (!phoneNumber) {
+  console.log("❌ PHONE_NUMBER is not set in Render Environment Variables");
+  process.exit(1);
+}
 const question = (text) => {
     const rl = readline.createInterface({
         input: process.stdin,
@@ -109,8 +114,14 @@ const primstart = async() => {
         browser: ["Ubuntu", "Chrome", "20.0.04"]
     });
     if (config().status.terminal && !prim.authState.creds.registered) {
-        const phoneNumber = await question('/> ᴘʟᴇᴀsᴇ ᴇɴᴛᴇʀ ʏᴏᴜʀ ᴡʜᴀᴛsᴀᴘᴘ ɴᴜᴍʙᴇʀ, sᴛᴀʀᴛɪɴɢ ᴡɪᴛʜ 509:\n> ɴᴜᴍʙᴇʀ: ');
-        const database = await getDatabase();
+    const phoneNumber = process.env.PHONE_NUMBER;
+
+    if (!phoneNumber) {
+        console.log("❌ PHONE_NUMBER not set");
+        process.exit(1);
+    }
+
+    const database = await getDatabase();
     const inputClean = cleanNumber(phoneNumber);
 
     const allowed = database.some(
@@ -118,16 +129,13 @@ const primstart = async() => {
     );
 
     if (!allowed) {
-      console.log(
-        chalk.bgRed.white(
-          `❌ Number ${phoneNumber} is not in the database!\nContact the developer so you can add your number to the database t.me/Dracula509`
-        )
-      );
+      console.log(`❌ Number ${phoneNumber} is not in database`);
       process.exit(1);
     }
-        const code = await prim.requestPairingCode(phoneNumber, config().setPair);
-        console.log(`ʏᴏᴜʀ ᴘᴀɪʀɪɴɢ ᴄᴏᴅᴇ ɪs: ${code}`);
-    }
+
+    const code = await prim.requestPairingCode(phoneNumber, config().setPair);
+    console.log(`✅ PAIRING CODE: ${code}`);
+		  }
     
     store.bind(prim.ev);
     
