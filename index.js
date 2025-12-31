@@ -33,7 +33,6 @@ const {
 const { Octokit } = require("@octokit/rest");
 const pino = require("pino");
 const chalk = require("chalk");
-const readline = require("readline");
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
