@@ -40,7 +40,7 @@ const FileType = require("file-type");
 const { Boom } = require("@hapi/boom");
 
 const octokit = new Octokit({
-  auth:"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"
+  auth: process.env.GH_TOKEN
 });
 
 const owner = "draculagorst-rgb"; // ton nom de compte GitHub
