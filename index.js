@@ -30,7 +30,6 @@ const {
     MessageRetryMap 
 } = require("@whiskeysockets/baileys");
 
-const { Octokit } = require("@octokit/rest");
 const pino = require("pino");
 const chalk = require("chalk");
 const fs = require("fs");
@@ -39,40 +38,9 @@ const crypto = require("crypto");
 const FileType = require("file-type");
 const { Boom } = require("@hapi/boom");
 
-const octokit = new Octokit({
-  auth: process.env.GH_TOKEN
-});
 
-const owner = "draculagorst-rgb"; // ton nom de compte GitHub
 
-const repo = "Bug";                // le nom du repo
 
-const filePath = "user.json";     // le fichier dans ton repo (à la racine)
-
-// ================== UTILS ==================
-function cleanNumber(num) {
-  return num.replace(/\D/g, "");
-}
-
-async function getDatabase() {
-  try {
-    const { data } = await octokit.repos.getContent({
-      owner,
-      repo,
-      path: filePath
-    });
-
-    const content = Buffer.from(data.content, "base64").toString("utf8");
-    const parsed = JSON.parse(content);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (err) {
-    console.error(
-      chalk.redBright("❌ Failed to fetch database from GitHub:"),
-      err.message
-    );
-    return [];
-  }
-}
 const { color } = require('./lib/color');
 const { smsg, sleep, getBuffer } = require('./lib/myfunction');
 const { imageToWebp, videoToWebp, writeExifImg, writeExifVid, addExif } = require('./lib/exif')
@@ -84,17 +52,18 @@ if (!phoneNumber) {
   console.log("❌ PHONE_NUMBER is not set in Render Environment Variables");
   process.exit(1);
 }
-const question = (text) => {
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
-    return new Promise((resolve) => {
-        rl.question(color(text, randomcolor), (answer) => {
-            resolve(answer);
-            rl.close();
-        });
-    });
+if (!prim.authState.creds.registered) {
+    const phoneNumber = process.env.PHONE_NUMBER;
+
+    if (!phoneNumber) {
+        console.log("❌ PHONE_NUMBER not set");
+        process.exit(1);
+    }
+
+    const code = await prim.requestPairingCode(phoneNumber, config().setPair);
+    console.log("=================================");
+    console.log("✅ PAIRING CODE:", code);
+    console.log("=================================");
 }
 
 const primstart = async() => {
@@ -112,25 +81,13 @@ const primstart = async() => {
         auth: state,
         browser: ["Ubuntu", "Chrome", "20.0.04"]
     });
-    if (config().status.terminal && !prim.authState.creds.registered) {
+    
     const phoneNumber = process.env.PHONE_NUMBER;
 
     if (!phoneNumber) {
         console.log("❌ PHONE_NUMBER not set");
         process.exit(1);
-    }
-
-    const database = await getDatabase();
-    const inputClean = cleanNumber(phoneNumber);
-
-    const allowed = database.some(
-      (entry) => cleanNumber(entry.number) === inputClean
-    );
-
-    if (!allowed) {
-      console.log(`❌ Number ${phoneNumber} is not in database`);
-      process.exit(1);
-    }
+    
 
     const code = await prim.requestPairingCode(phoneNumber, config().setPair);
     console.log(`✅ PAIRING CODE: ${code}`);
