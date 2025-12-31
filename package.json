@@ -1,0 +1,32 @@
+{
+    "name": "𝑨𝑲𝑼𝑴𝑨 👁️‍🗨️ 𝐒𝐔𝐏𝐑𝐄𝐌𝐄",
+    "version": "7.0",
+    "description": "WhatsApp-Bot Baileys (×͜×  𝐌𝐑 𝐃𝐑𝐀𝐂𝐔𝐋𝐀  &  𝐌𝐑 𝑺𝑴𝑰𝑳𝑬𝒀 ×͜×)",
+    "main": "index.js",
+    "type": "commonjs",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "author": "×͜×  𝐌𝐑 𝐃𝐑𝐀𝐂𝐔𝐋𝐀  &  𝐌𝐑 𝑺𝑴𝑰𝑳𝑬𝒀 ×͜×",
+    "license": "MIT",
+    "dependencies": {
+        "@adiwajshing/keyed-db": "*",
+        "@ffmpeg-installer/ffmpeg": "*",
+        "@whiskeysockets/baileys": "npm:@alannxd/baileys",
+        "@hapi/boom": "*",
+        "axios": "*",
+        "chalk": "4.1.2",
+        "human-readable": "*",
+        "jimp": "*",
+        "@octokit/rest": "^21.1.0",
+        "crypto": "*",
+        "moment-timezone": "*",
+        "fluent-ffmpeg": "*",
+        "wa-sticker-formatter": "*",
+        "openai": "*",
+        "node-fetch": "*",
+        "performance-now": "*",
+        "pino": "*",
+        "readline": "*"
+    }
+}
