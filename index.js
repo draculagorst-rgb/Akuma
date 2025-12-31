@@ -58,13 +58,15 @@ if (!prim.authState.creds.registered) {
     if (!phoneNumber) {
         console.log("❌ PHONE_NUMBER not set");
         process.exit(1);
-    }
+
+}
 
     const code = await prim.requestPairingCode(phoneNumber, config().setPair);
     console.log("=================================");
     console.log("✅ PAIRING CODE:", code);
     console.log("=================================");
 }
+
 
 const primstart = async() => {
     const store = makeInMemoryStore({
@@ -482,7 +484,3 @@ console.error = function (msg, ...args) {
 }
 
 const originalStderrWrite = process.stderr.write
-process.stderr.write = function (msg, encoding, fd) {
-    if (typeof msg === 'string' && ignoredErrors.some(e => msg.includes(e))) return
-    originalStderrWrite.apply(process.stderr, arguments)
-}
